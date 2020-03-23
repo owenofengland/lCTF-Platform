@@ -1,9 +1,11 @@
+from ctf import db
+from ctf.models.Score import Score
+from ctf.models.User import User
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from .models.User import User
-from .models.Score import Score
-from . import db
+from sys import path
+path.append("..")
 
 auth = Blueprint("auth", __name__)
 
@@ -39,8 +41,6 @@ def signup_post():
     email = request.form.get("email")
     username = request.form.get("username")
     password = request.form.get("password")
-
-    print(username)
 
     user = User.query.filter_by(email=email).first()
 

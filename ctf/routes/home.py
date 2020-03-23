@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template
 from flask_login import login_required, current_user
-from .models.Score import Score
-from . import db
+from ctf.models.Score import Score
+from ctf import db
+from sys import path
+path.append("..")
 
 home = Blueprint('home', __name__)
 

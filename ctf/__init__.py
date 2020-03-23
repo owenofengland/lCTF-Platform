@@ -25,10 +25,13 @@ def create_app():
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    from .home import home as home_blueprint
+    from .routes.home import home as home_blueprint
     app.register_blueprint(home_blueprint)
 
-    from .auth import auth as auth_blueprint
+    from .routes.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
+
+    from .routes.scoreboard import scoreboard as scoreboard_blueprint
+    app.register_blueprint(scoreboard_blueprint)
 
     return app
