@@ -1,6 +1,8 @@
 from ctf import db
 from ctf.models.Score import Score
 from ctf.models.User import User
+from ctf.validation.LoginForm import LoginForm
+from ctf.validation.RegistrationForm import RegistrationForm
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -10,51 +12,62 @@ path.append("..")
 auth = Blueprint("auth", __name__)
 
 
-@auth.route("/login")
+@auth.route("/login", methods=['POST', "GET"])
 def login():
-    return render_template("login.html")
+    form = LoginForm()
+    if request.method == "POST" and form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+        remember = form.remember_me.data
+
+        user = User.query.filter_by(email=email).first()
+
+        if not user or not check_password_hash(user.password, password):
+            flash("Please check your login details and try again.")
+            return redirect(url_for("auth.login"))
+        else:
+            login_user(user, remember=remember)
+            return redirect(url_for("home.profile", username=user.username))
+    elif request.method == "POST" and not form.validate_on_submit():
+        errors = ["Email: " + error for error in form.email.errors]
+        passwordErrors = ["Password: " +
+                          error for error in form.password.errors]
+        errors.extend(passwordErrors)
+        flash(errors)
+    return render_template("login.html", form=form)
 
 
-@auth.route("/login", methods=['POST'])
-def login_post():
-    email = request.form.get("email")
-    password = request.form.get("password")
-    remember = True if request.form.get("remember") else False
-
-    user = User.query.filter_by(email=email).first()
-
-    if not user or not check_password_hash(user.password, password):
-        flash("Please check your login details and try again.")
-        return redirect(url_for("auth.login"))
-    else:
-        login_user(user, remember=remember)
-        return redirect(url_for("home.profile", username=user.username))
-
-
-@auth.route("/signup")
+@auth.route("/signup", methods=["POST", "GET"])
 def signup():
-    return render_template("signup.html")
+    form = RegistrationForm()
+    if request.method == "POST" and form.validate_on_submit():
+        email = form.email.data
+        username = form.username.data
+        password = form.password.data
 
+        user = User.query.filter_by(email=email).first()
 
-@auth.route("/signup", methods=["POST"])
-def signup_post():
-    email = request.form.get("email")
-    username = request.form.get("username")
-    password = request.form.get("password")
-
-    user = User.query.filter_by(email=email).first()
-
-    if user:
-        flash("Account with input email or username already exists")
-        return redirect(url_for('auth.signup'))
-    else:
-        new_user = User(email=email,
-                        password=generate_password_hash(password, method='sha256'), username=username)
-        new_user_score = Score(score=0, user=new_user)
-        db.session.add(new_user)
-        db.session.add(new_user_score)
-        db.session.commit()
-        return redirect(url_for("auth.login"))
+        if user:
+            flash("Account with input email or username already exists")
+            return redirect(url_for('auth.signup'))
+        else:
+            new_user = User(email=email,
+                            password=generate_password_hash(password, method='sha256'), username=username)
+            new_user_score = Score(score=0, user=new_user)
+            db.session.add(new_user)
+            db.session.add(new_user_score)
+            db.session.commit()
+            return redirect(url_for("auth.login"))
+    elif request.method == "POST" and not form.validate_on_submit():
+        errors = ["Email: " + error for error in form.email.errors]
+        passwordErrors = ["Password: " +
+                          error for error in form.password.errors]
+        usernameErrors = ["Username: " +
+                          error for error in form.username.errors]
+        errors.extend(passwordErrors)
+        errors.extend(usernameErrors)
+        flash(errors)
+    return render_template("signup.html", form=form)
 
 
 @auth.route("/logout")

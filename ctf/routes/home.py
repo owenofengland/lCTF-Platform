@@ -27,3 +27,8 @@ def view_profile(username):
     user = User.query.filter_by(username=username).first()
     score = Score.query.filter_by(username=user.username).first()
     return render_template('profile.html', name=user.username, score=score.score)
+
+
+@home.route("/about")
+def about():
+    return render_template("about.html")

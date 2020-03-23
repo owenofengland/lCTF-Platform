@@ -7,3 +7,4 @@ ctf/.vscode
 ctf/routes/__pycache__
 ctf/__init__.pyc
 ctf/models/__pycache__
+ctf/validation/__pycache__
