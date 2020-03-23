@@ -13,7 +13,7 @@
             {% for data in scores %}
             <tr>
                 <td>{{ loop.index }}</td>
-                <td>{{ data.username }}</td>
+                <td><a href="{{ url_for('home.view_profile', username = data.username) }}">{{ data.username }}</a></td>
                 <td>{{ data.score }}</td>
             </tr>
             {% endfor %}
