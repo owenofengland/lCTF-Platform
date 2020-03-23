@@ -9,19 +9,19 @@ path.append("..")
 home = Blueprint('home', __name__)
 
 
-@home.route("/")
+@home.route("/", methods=["GET"])
 def index():
     return render_template("home.html")
 
 
-@home.route("/profile")
+@home.route("/profile", methods=["GET"])
 @login_required
 def profile():
     user_score = Score.query.filter_by(username=current_user.username).first()
     return render_template("profile.html", name=current_user.username, score=user_score.score)
 
 
-@home.route("/profile/<username>")
+@home.route("/profile/<username>", methods=["GET"])
 @login_required
 def view_profile(username):
     user = User.query.filter_by(username=username).first()
@@ -29,6 +29,6 @@ def view_profile(username):
     return render_template('profile.html', name=user.username, score=score.score)
 
 
-@home.route("/about")
+@home.route("/about", methods=["GET"])
 def about():
     return render_template("about.html")

@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from .secure import db_uri, secret_key
+
 db = SQLAlchemy()
 
 
@@ -24,6 +25,8 @@ def create_app():
     def load_user(user_id):
         return User.query.get(int(user_id))
 
+    from .util.chal_import import add_to_db
+
     from .routes.home import home as home_blueprint
     app.register_blueprint(home_blueprint)
 
@@ -32,5 +35,10 @@ def create_app():
 
     from .routes.scoreboard import scoreboard as scoreboard_blueprint
     app.register_blueprint(scoreboard_blueprint)
+
+    from .routes.challenges import challenges as challenges_blueprint
+    app.register_blueprint(challenges_blueprint)
+
+    app.before_first_request(add_to_db)
 
     return app

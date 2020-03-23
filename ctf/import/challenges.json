@@ -1,0 +1,20 @@
+{
+    "categories": ["Web", "Social Engineering", "Password"],
+    "challenges": [{
+            "name": "hello world!",
+            "value": 10,
+            "solves": 0,
+            "desc": "tester",
+            "flag": "",
+            "category": "Web"
+        },
+        {
+            "name": "hello again",
+            "value": 10,
+            "solves": 1,
+            "desc": "another tester",
+            "flag": "",
+            "category": "Social Engineering"
+        }
+    ]
+}
