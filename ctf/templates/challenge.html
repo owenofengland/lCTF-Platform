@@ -1,5 +1,36 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container">
+<div class="container text-center">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    {% if message is iterable and message is not string %}
+    {% for msg in messages %}
+    <div class="alert alert-warning" role="alert">
+        {{ msg }}
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+        {{ message }}
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <h3>{{ category }} - {{ name }}</h3>
+    <h4>{{ value }} Points</h4>
+    <h5>{{ solves }} Solves</h5>
+    <form class="form-signin" method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+            Input Flag<br>
+            {{ form.guess() }}
+        </p>
+        <p>
+            {{ form.submit() }}
+        </p>
+    </form>
+    <p class="mt-5 mb-3 text-muted">lCTF 2020</p>
 </div>
 {% endblock %}

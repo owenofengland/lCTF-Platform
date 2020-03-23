@@ -1,10 +1,12 @@
 # lCTF - CTF Platform designed to teach CTF and Security!
 
 ## To Do
-* Routes, and templates for challenges
-* Flag generation/regeneration
+
+* Template and logic for the all challenge page
+* Logic for crediting points
+* Logic for limiting users to one solve
+* Flag generation/regeneration script/logic
 * Deployment logistics
-* Autoescape for XSS protection in Jinja Templates
 
 ### Some Important Notes
 
