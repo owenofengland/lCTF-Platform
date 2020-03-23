@@ -1,0 +1,6 @@
+/env
+ctf/__pycache__
+ctf/secure.py
+ctf/db.sqlite
+ctf/.vscode
+/.vscode

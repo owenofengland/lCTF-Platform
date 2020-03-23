@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" />
+    <!-- Bootstrap Stylesheet -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Bootstrap JS Scripts -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Page name and icon -->
+    <link rel="icon" href="../static/broken-lock.png" type="image/x-icon" />
+    <title>lCTF</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg py-3 navbar-dark bg-dark shadow-sm" style="color:#233D4D">
+        <div class="container">
+            <a href="#" class="navbar-brand">
+                <!-- Logo Image -->
+                <img src="../static/broken-lock.png" width="45" alt="" class="d-inline-block align-middle mr-2">
+                <!-- Logo Text -->
+                <span class="text-uppercase font-weight-bold">lCTF</span>
+            </a>
+
+            <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
+
+            <div id="navbarSupportedContent" class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a href="{{ url_for('home.index')}}" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+                    {% if current_user.is_authenticated %}
+                    <li class="nav-item"><a href="{{ url_for('home.profile') }}" class="nav-link">Profile</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">Challenges</a></li>
+                    {% endif %}
+                    {% if not current_user.is_authenticated %}
+                    <li class="nav-item"><a href="{{ url_for('auth.login' )}}" class="nav-link">Log In</a></li>
+                    <li class="nav-item"><a href="{{ url_for('auth.signup') }}" class="nav-link">Sign Up</a></li>
+                    {% endif %}
+                    {% if current_user.is_authenticated %}
+                    <li class="nav-item"><a href="{{ url_for('auth.logout') }}" class="nav-link">Log Out</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="jumbotron jumbotron-fluid min-vh-100"
+        style="background-color: #90C3C8; margin-bottom: 0; margin-top: 0;">
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    <div class="footer-copyright footer-fluid text-center py-3" style="background-color: #233d4d;">
+        <a href="https://github.com/owenofengland"><span class="text-muted">GitHub</span>
+        </a>
+    </div>
+</body>
+
+</html>
