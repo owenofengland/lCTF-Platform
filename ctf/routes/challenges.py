@@ -3,7 +3,7 @@ from ctf.models.Challenge import Challenge
 from ctf.models.Category import Category
 from ctf.validation.ChallengeForm import ChallengeForm
 from flask import Blueprint, render_template, redirect, url_for, flash, request
-from flask_login import login_required
+from flask_login import login_required, current_user
 from sys import path
 path.append("..")
 

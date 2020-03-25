@@ -34,14 +34,18 @@ def get_import():
 def add_categories_to_db(categories):
     print("[*] Adding categories to the database")
     for category in categories:
-        try:
-            new_category = Category(name=category)
-            db.session.add(new_category)
-            db.session.commit()
-            print("[*] Added category %s to the database" % category)
-        except Exception as e:
-            print("[!] Failed to add %s to the database" % category)
-            print(e)
+        check = Category.query.filter_by(name=category).first()
+        if check:
+            print("[!] Category %s already in the database" % category)
+        else:
+            try:
+                new_category = Category(name=category)
+                db.session.add(new_category)
+                db.session.commit()
+                print("[*] Added category %s to the database" % category)
+            except Exception as e:
+                print("[x] Failed to add %s to the database" % category)
+                print(e)
 
 
 def add_challenges_to_db(challenges):
@@ -54,15 +58,19 @@ def add_challenges_to_db(challenges):
         flag = challenge["flag"]
         category_id = challenge["category"]
 
-        try:
-            new_challenge = Challenge(
-                name=name, value=value, solves=solves, desc=desc, flag=flag, category_id=category_id)
-            db.session.add(new_challenge)
-            db.session.commit()
-            print("[*] Added challenge %s to the database" % name)
-        except Exception as e:
-            print("[!] Failed to add %s to the database" % name)
-            print(e)
+        check = Challenge.query.filter_by(name=name).first()
+        if check:
+            print("[!] Challenge by name of %s already in the database" % name)
+        else:
+            try:
+                new_challenge = Challenge(
+                    name=name, value=value, solves=solves, desc=desc, flag=flag, category_id=category_id)
+                db.session.add(new_challenge)
+                db.session.commit()
+                print("[*] Added challenge %s to the database" % name)
+            except Exception as e:
+                print("[x] Failed to add %s to the database" % name)
+                print(e)
 
 
 def add_to_db():

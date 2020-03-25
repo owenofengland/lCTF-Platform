@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from .secure import db_uri, secret_key
@@ -24,6 +24,10 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+
+    @app.errorhandler(404)
+    def error_not_found(error):
+        return render_template("404.html"), 404
 
     from .util.chal_import import add_to_db
 

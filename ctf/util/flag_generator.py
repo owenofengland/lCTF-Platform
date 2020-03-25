@@ -1,0 +1,1 @@
+# Flag generator util script
