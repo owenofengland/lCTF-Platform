@@ -1,6 +1,7 @@
 from json import load
 from os.path import exists, isfile
 from sys import exit, path
+from ctf.util.flag_generator import generate_flag_buffer
 from ctf.models.Challenge import Challenge
 from ctf.models.Category import Category
 from ctf import db
@@ -55,7 +56,8 @@ def add_challenges_to_db(challenges):
         value = challenge["value"]
         solves = challenge["solves"]
         desc = challenge["desc"]
-        flag = challenge["flag"]
+        base_flag = challenge["flag"]
+        cur_flag = generate_flag_buffer(base_flag)
         category_id = challenge["category"]
 
         check = Challenge.query.filter_by(name=name).first()
@@ -64,7 +66,7 @@ def add_challenges_to_db(challenges):
         else:
             try:
                 new_challenge = Challenge(
-                    name=name, value=value, solves=solves, desc=desc, flag=flag, category_id=category_id)
+                    name=name, value=value, solves=solves, desc=desc, base_flag=base_flag, cur_flag=cur_flag, category_id=category_id)
                 db.session.add(new_challenge)
                 db.session.commit()
                 print("[*] Added challenge %s to the database" % name)

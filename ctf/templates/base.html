@@ -44,7 +44,9 @@
                     <li class="nav-item"><a href="{{ url_for('home.about')}}" class="nav-link">About</a></li>
                     {% if current_user.is_authenticated %}
                     <li class="nav-item"><a href="{{ url_for('home.profile') }}" class="nav-link">Profile</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">Challenges</a></li>
+                    <li class="nav-item"><a href="{{ url_for('challenges.challenges_list')}}"
+                            class="nav-link">Challenges</a>
+                    </li>
                     <li class="nav-item"><a href="{{ url_for('scoreboard.scoreboard_out') }}"
                             class="nav-link">Scoreboard</a></li>
                     {% endif %}

@@ -11,6 +11,7 @@ class Challenge(db.Model):
     value = db.Column(db.Integer)
     solves = db.Column(db.Integer, default=0)
     desc = db.Column(db.String(300))
-    flag = db.Column(db.String(100))
+    base_flag = db.Column(db.String(100))
+    cur_flag = db.Column(db.String(100))
     category_id = db.Column(db.String, db.ForeignKey('category.name'))
     solve = db.relationship("Solve", backref="challenge_solve")

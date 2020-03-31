@@ -59,7 +59,7 @@ def signup():
 
             challenges = Challenge.query.all()
             for challenge in challenges:
-                this_Solve = Solve(username=username, challenge=challenge.name)
+                this_Solve = Solve(username=new_user.username, challenge=challenge.name)
                 db.session.add(this_Solve)
 
             db.session.add(new_user)

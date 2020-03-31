@@ -1,5 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
+    <div class="card-deck">
+        {% for row in grid  %}
+
+        {% for challenge in row %}
+        {% if loop.index == 1 %}
+        <div class="card text-center mx-2">
+            <div class="card-body">
+                <h5 class="card-title">{{ challenge.name }}</h5>
+            </div>
+        </div>
+        {% else %}
+        <div class="card text-center mx-2">
+            <div class="card-body">
+                <h5 class="card-title">{{ challenge.name }}</h5>
+                <p class="card-text">{{ challenge.value }} Points</p>
+                <a href="{{ url_for('challenges.challenge', id=challenge.id) }}" class="stretched-link"></a>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
