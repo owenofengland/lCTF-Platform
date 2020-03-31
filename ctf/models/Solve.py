@@ -1,5 +1,6 @@
 from sys import path
 from . import User
+from . import Challenge
 from ctf import db
 path.append("..")
 
@@ -9,6 +10,6 @@ path.append("..")
 
 class Solve(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = None
-    challenge = None
+    username = db.Column(db.String, db.ForeignKey('user.username'))
+    challenge = db.Column(db.String, db.ForeignKey('challenge.name'))
     solved = db.Column(db.Boolean, default=False)

@@ -1,6 +1,6 @@
 {
-    "navs": "233D4D",
-    "background": "90C3C8",
+    "navs": "#233D4D",
+    "background": "#90C3C8",
     "pass-chal": "#8CBA80",
     "fail-chal": "#6C464F"
 }

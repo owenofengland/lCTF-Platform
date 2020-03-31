@@ -2,6 +2,7 @@ from ctf import db
 from ctf.models.Challenge import Challenge
 from ctf.models.Category import Category
 from ctf.models.Score import Score
+from ctf.models.Solve import Solve
 from ctf.validation.ChallengeForm import ChallengeForm
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
@@ -25,6 +26,8 @@ def challenge(id):
     this_challenge = Challenge.query.filter_by(id=id).first()
     current_user_score = Score.query.filter_by(
         username=current_user.username).first()
+    current_user_solve = Solve.query.filter_by(
+        username=current_user.username, challenge=this_challenge.name).first()
 
     if this_challenge:
         name = this_challenge.name
@@ -37,9 +40,13 @@ def challenge(id):
         if request.method == "POST" and form.validate_on_submit():
             guess = form.guess.data
             if guess == flag:
-                flash("Success! Correct flag submitted!")
-                current_user_score.score = current_user_score.score + value
-                db.session.commit()
+                if current_user_solve.solved:
+                    flash("Already submitted correct flag!")
+                else:
+                    flash("Success! Correct flag submitted!")
+                    current_user_score.score = current_user_score.score + value
+                    current_user_solve.solved = True
+                    db.session.commit()
             else:
                 flash("Flag is invalid")
 

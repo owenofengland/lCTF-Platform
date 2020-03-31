@@ -1,5 +1,6 @@
 from sys import path
 from . import Category
+from . import Solve
 from ctf import db
 path.append("..")
 
@@ -12,3 +13,4 @@ class Challenge(db.Model):
     desc = db.Column(db.String(300))
     flag = db.Column(db.String(100))
     category_id = db.Column(db.String, db.ForeignKey('category.name'))
+    solve = db.relationship("Solve", backref="challenge_solve")

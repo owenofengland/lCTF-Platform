@@ -1,6 +1,8 @@
 from ctf import db
+from ctf.models.Challenge import Challenge
 from ctf.models.Score import Score
 from ctf.models.User import User
+from ctf.models.Solve import Solve
 from ctf.validation.LoginForm import LoginForm
 from ctf.validation.RegistrationForm import RegistrationForm
 from flask import Blueprint, render_template, redirect, url_for, request, flash
@@ -53,7 +55,13 @@ def signup():
         else:
             new_user = User(email=email,
                             password=generate_password_hash(password, method='sha256'), username=username)
-            new_user_score = Score(score=0, user=new_user)
+            new_user_score = Score(score=0, username=new_user.username)
+
+            challenges = Challenge.query.all()
+            for challenge in challenges:
+                this_Solve = Solve(username=username, challenge=challenge.name)
+                db.session.add(this_Solve)
+
             db.session.add(new_user)
             db.session.add(new_user_score)
             db.session.commit()
