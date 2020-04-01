@@ -2,10 +2,7 @@
 
 ## To Do
 
-* Template and logic for the all challenge page
-* Logic for crediting points
-* Logic for limiting users to one solve
-* Flag generation/regeneration script/logic
+* Restricting access to problems (point requirements to force users into doing certain challenges in sequence)
 * Deployment logistics
 
 ### Some Important Notes
