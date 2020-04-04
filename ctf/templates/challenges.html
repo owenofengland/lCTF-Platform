@@ -2,6 +2,23 @@
 {% block content %}
 <div class="container text-center">
     <h2>Challenges</h2>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    {% if message is iterable and message is not string %}
+    {% for msg in messages %}
+    <div class="alert alert-warning" role="alert">
+        {{ msg }}
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+        {{ message }}
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 </div>
 <div class="container">
     {% for row in grid  %}

@@ -43,25 +43,34 @@ def challenge(id):
     if this_challenge:
         name = this_challenge.name
         value = this_challenge.value
+        requirement = this_challenge.requirement
         solves = this_challenge.solves
         desc = this_challenge.desc
         cur_flag = this_challenge.cur_flag
         category = this_challenge.category_id
 
-        if request.method == "POST" and form.validate_on_submit():
-            guess = form.guess.data
-            if guess == cur_flag:
-                if current_user_solve.solved:
-                    flash("Already submitted correct flag!")
+        if current_user_score.score >= requirement:
+            if request.method == "POST" and form.validate_on_submit():
+                guess = form.guess.data
+                if guess == cur_flag:
+                    if current_user_solve.solved:
+                        flash("Already submitted correct flag!")
+                    else:
+                        flash("Success! Correct flag submitted!")
+                        current_user_score.score = current_user_score.score + value
+                        current_user_solve.solved = True
+                        this_challenge.cur_flag = generate_flag_buffer(
+                            this_challenge.base_flag)
+                        db.session.commit()
                 else:
-                    flash("Success! Correct flag submitted!")
-                    current_user_score.score = current_user_score.score + value
-                    current_user_solve.solved = True
-                    this_challenge.cur_flag = generate_flag_buffer(this_challenge.base_flag)
-                    db.session.commit()
-            else:
-                flash("Flag is invalid")
+                    flash("Flag is invalid")
 
-        return render_template("challenge.html", form=form, name=name, value=value, solves=solves, category=category)
+            return render_template("challenge.html", form=form, name=name, value=value, solves=solves, category=category)
+        else:
+            to_Flash = "Score requirements not met! You need " + \
+                str(requirement) + " points and only currently have " + \
+                str(current_user_score.score) + " points."
+            flash(message=to_Flash)
+            return redirect(url_for("challenges.challenges_list"))
     else:
         return "Error, challenge does not exist"
