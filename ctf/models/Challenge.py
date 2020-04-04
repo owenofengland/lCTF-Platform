@@ -9,6 +9,7 @@ class Challenge(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     value = db.Column(db.Integer)
+    requirement = db.Column(db.Integer)
     solves = db.Column(db.Integer, default=0)
     desc = db.Column(db.String(300))
     base_flag = db.Column(db.String(100))

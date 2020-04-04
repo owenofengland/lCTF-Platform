@@ -3,17 +3,19 @@
     "challenges": [{
             "name": "hello world!",
             "value": 10,
+            "requirement": 0,
             "solves": 0,
             "desc": "tester",
-            "flag": "",
+            "flag": "hello",
             "category": "Web"
         },
         {
             "name": "hello again",
             "value": 10,
+            "requirement": 10,
             "solves": 1,
             "desc": "another tester",
-            "flag": "",
+            "flag": "nice",
             "category": "Social Engineering"
         }
     ]
