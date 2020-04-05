@@ -6,6 +6,7 @@
             "requirement": 0,
             "solves": 0,
             "desc": "tester",
+            "link": "https://www.google.com/",
             "flag": "hello",
             "category": "Web"
         },
@@ -15,6 +16,7 @@
             "requirement": 10,
             "solves": 1,
             "desc": "another tester",
+            "link": "https://www.reddit.com/",
             "flag": "nice",
             "category": "Social Engineering"
         }

@@ -46,6 +46,7 @@ def challenge(id):
         requirement = this_challenge.requirement
         solves = this_challenge.solves
         desc = this_challenge.desc
+        link = this_challenge.link
         cur_flag = this_challenge.cur_flag
         category = this_challenge.category_id
 
@@ -65,7 +66,7 @@ def challenge(id):
                 else:
                     flash("Flag is invalid")
 
-            return render_template("challenge.html", form=form, name=name, value=value, solves=solves, category=category)
+            return render_template("challenge.html", form=form, name=name, value=value, solves=solves, category=category, desc=desc, link=link)
         else:
             to_Flash = "Score requirements not met! You need " + \
                 str(requirement) + " points and only currently have " + \

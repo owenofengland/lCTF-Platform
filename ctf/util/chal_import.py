@@ -57,6 +57,7 @@ def add_challenges_to_db(challenges):
         requirement = challenge["requirement"]
         solves = challenge["solves"]
         desc = challenge["desc"]
+        link = challenge["link"]
         base_flag = challenge["flag"]
         cur_flag = generate_flag_buffer(base_flag)
         category_id = challenge["category"]
@@ -67,7 +68,7 @@ def add_challenges_to_db(challenges):
         else:
             try:
                 new_challenge = Challenge(
-                    name=name, value=value, requirement=requirement, solves=solves, desc=desc, base_flag=base_flag, cur_flag=cur_flag, category_id=category_id)
+                    name=name, value=value, requirement=requirement, solves=solves, desc=desc, link=link, base_flag=base_flag, cur_flag=cur_flag, category_id=category_id)
                 db.session.add(new_challenge)
                 db.session.commit()
                 print("[*] Added challenge %s to the database" % name)
