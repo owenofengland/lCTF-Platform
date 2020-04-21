@@ -29,6 +29,10 @@ def create_app():
     def error_not_found(error):
         return render_template("404.html"), 404
 
+    @app.errorhandler(500)
+    def server_error(error):
+        return render_template("500.html"), 500
+
     from .util.chal_import import add_to_db
 
     from .routes.home import home as home_blueprint
